@@ -128,7 +128,6 @@ public class SetPropertyDrawer : PropertyDrawer {
 
 			case SerializedPropertyType.Float:
 				if ( propertyType == typeof(double) ) {
-					Debug.Log("Double");
 					return serializedProperty.doubleValue;
 				}
 				return serializedProperty.floatValue;
@@ -141,11 +140,9 @@ public class SetPropertyDrawer : PropertyDrawer {
 
 			case SerializedPropertyType.Integer:
 				if ( propertyType == typeof(short)) {
-					Debug.Log("Short");
 					return (short)serializedProperty.intValue;
 				}
 				else if ( propertyType == typeof(long)) {
-					Debug.Log("Long");
 					return serializedProperty.longValue;
 				}
 				return serializedProperty.intValue;
