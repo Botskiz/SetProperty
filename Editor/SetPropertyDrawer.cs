@@ -46,7 +46,7 @@ public class SetPropertyDrawer : PropertyDrawer {
 					Debug.LogError("Invalid property name: " + setProperty.Name + " @" + setProperty.Property.propertyPath + "\nCheck your [SetProperty] attribute");
 				}
 				else if ( propertyType != fieldType ) {
-					Debug.LogError("Invalid property type " + propertyType.ToString() + " @" + setProperty.Property.propertyPath + "\nProperty must be of same type as source Field type "+ fieldType.ToString());
+					Debug.LogError("Invalid property type " + propertyType.ToString() + " @" + setProperty.Property.propertyPath + "\nProperty must be of same type as source Field type " + fieldType.ToString());
 				}
 				else {
 					// Using FieldInfo instead of the SerializedProperty accessors causes our property to be updated incorrectly, unless it's the last element of a collection.
@@ -127,9 +127,11 @@ public class SetPropertyDrawer : PropertyDrawer {
 				return serializedProperty.enumValueIndex;
 
 			case SerializedPropertyType.Float:
+				if ( propertyType == typeof(double) ) {
+					Debug.Log("Double");
+					return serializedProperty.doubleValue;
+				}
 				return serializedProperty.floatValue;
-			//TODO: float and double are both represented by SerializedPropertyType.Float. Find a way to return the proper data.
-			//return property.doubleValue;
 
 			case SerializedPropertyType.Generic:
 				break;
@@ -138,10 +140,15 @@ public class SetPropertyDrawer : PropertyDrawer {
 				break;
 
 			case SerializedPropertyType.Integer:
+				if ( propertyType == typeof(short)) {
+					Debug.Log("Short");
+					return (short)serializedProperty.intValue;
+				}
+				else if ( propertyType == typeof(long)) {
+					Debug.Log("Long");
+					return serializedProperty.longValue;
+				}
 				return serializedProperty.intValue;
-			//TODO: int, short and long are both represented by SerializedPropertyType.Integer. Find a way to return the proper data.
-			//return (short)property.intValue;
-			//return property.longValue;
 
 			case SerializedPropertyType.LayerMask:
 				break;
@@ -168,7 +175,6 @@ public class SetPropertyDrawer : PropertyDrawer {
 				return serializedProperty.vector4Value;
 		}
 
-		//return null;
 		throw new NotImplementedException("Unimplemented accessor for SerializedPropertyType." + serializedProperty.propertyType);
 	}
 }
