@@ -7,8 +7,6 @@ using System.Collections.Generic;
 
 public class SetPropertyExample : MonoBehaviour {
 
-	// Gradient?
-	// LayerMask?
 	[System.Serializable]
 	public class PropertyClass {
 
